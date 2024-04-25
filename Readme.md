@@ -2,6 +2,10 @@
 
 TV Maze is an Android Compose app that allows you to schedule for your favorite TV shows and get detailed information about them.
 
+![Main Screen](./preview/Main.png)
+
+![Details](./preview/Details.png)
+
 ## Features
 
 - View show schedule
