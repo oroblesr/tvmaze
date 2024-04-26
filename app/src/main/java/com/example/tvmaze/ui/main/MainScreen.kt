@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,6 +18,7 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -36,13 +38,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.tvmaze.R
 import com.example.tvmaze.model.MainScreenState
 import com.example.tvmaze.model.TvNetwork
@@ -115,7 +117,7 @@ fun NetworkCell(tvNetwork: TvNetwork) {
         ),
         modifier = Modifier
             .padding(8.dp)
-            .height(200.dp)
+            .height(300.dp)
             .width(100.dp)
     ) {
         Box(contentAlignment = Alignment.Center, modifier = Modifier
@@ -144,6 +146,7 @@ fun ShowCell(show: TvShow) {
     }
 
     Card(
+        shape = CutCornerShape(0.dp),
         onClick = {
             openDialog.value = Pair(true, show)
         },
@@ -152,32 +155,28 @@ fun ShowCell(show: TvShow) {
         ),
         modifier = Modifier
             .padding(8.dp)
-            .height(200.dp)
-            .width(300.dp)
+            .height(300.dp)
+            .width(120.dp)
     ) {
-        Row(modifier = Modifier
-            .padding(8.dp)
-            .fillMaxSize()) {
+        Column(modifier = Modifier.fillMaxHeight()) {
             GlideImage(
                 model = show.image?.medium,
                 contentDescription = show.name.orEmpty(),
-                modifier = Modifier.size(width = 140.dp, height = 184.dp)
-            ) {
-                it.transform(RoundedCorners(10))
-            }
-            Column {
-                Text(
-                    text = show.name.orEmpty(),
-                    style = MaterialTheme.typography.titleMedium,
-                    textAlign = TextAlign.Start,
-                    modifier = Modifier.padding(8.dp)
-                )
-                Text(
-                    text = show.schedule?.time.orEmpty(),
-                    textAlign = TextAlign.Start,
-                    modifier = Modifier.padding(8.dp)
-                )
-            }
+                modifier = Modifier.size(168.dp)
+            )
+            Text(
+                text = show.name.orEmpty(),
+                style = MaterialTheme.typography.titleMedium,
+                textAlign = TextAlign.Start,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.padding(8.dp)
+            )
+            Text(
+                text = show.schedule?.time.orEmpty(),
+                textAlign = TextAlign.Start,
+                modifier = Modifier.padding(8.dp)
+            )
         }
     }
 }
